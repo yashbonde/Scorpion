@@ -10,24 +10,42 @@ See license for legal queries.
 2017, Yash Bonde
 */
 
-#include "Energia.h" // Energia class to interact with the board
+#include<iostream>
+#include<vector>
 #include "scorpion_core.h" // for accessing the matrix making ops
 
-Matrix::Matrix(int x, int y){
-	/*
-	Args:
-		x (type int): the x-dimension of the matrix
-		y (type int): the y-dimension of the matrix
-	Returns:
-		A Matrix constructor for further operations
-	*/
-	x_ = x; y_ = y;
+Matrix::Matrix(std::vector<std::vector<float> > ex_matrix){
+	x_ = ex_matrix.size(); y_ = ex_matrix[0].size();
+	shape_vec.push_back(x_); shape_vec.push_back(y_);
+	// copying the elements of ex_matrix into the core_matrix
+	core_matrix = ex_matrix;
 }
 
-Matrix::shape(){
-	// code
+std::vector<float> Matrix::get_row(int row_num){
+	if(row_num >= shape_vec[0] || row_num < 0){
+		throw std::string("[!]Trying to get row number %d, while maximum is %d", row_num, shape_vec[0]);
+	}
+	std::vector<float> row_;
+	row_ = core_matrix[row_num];
+	return row_;
 }
 
-Matrix::add_val(){
-	// code
+std::vector<float> Matrix::get_col(int col_num){
+	if(col_num >= shape_vec[1] || col_num < 0){
+		throw std::string("[!]Trying to get column number %d, while maximum is %d", col_num, shape_vec[1]);
+	}
+	std::vector<float> col_;
+	for(int i=0; i<shape_vec[0]; i++){
+		col_.push_back(core_matrix[i][col_num]);
+	}
+	return col_;
+}
+
+// Functions telling the attribute of the Matrix
+std::vector<int> Matrix::shape(){
+	return shape_vec;
+}
+
+std::vector<std::vector<float> > Matrix::get_val(){
+	return core_matrix;
 }

@@ -15,17 +15,24 @@ See license for legal queries.
 
 // this is the only header we need as this is the core and only defines
 // the matrix class, all the other files we use will include this header
-#include "scopion_core.h"
+#include "scorpion_core.h"
+#include<iostream>
+#include<vector>
 
 // Matrix in Scorpion is a class
 class Matrix
 {
 public:
-	matrix(int x, int y);
-	int shape();
+	Matrix(std::vector<std::vector<float> > external_matrix);
+	std::vector<float> get_row(int row_num);
+	std::vector<float> get_col(int col_num);
+	// attribute functions
+	std::vector<int> shape();
+	std::vector<std::vector<float> > get_val();
 private:
 	int x_, y_;
-	
+	std::vector<int> shape_vec;
+	std::vector<std::vector<float> > core_matrix;
 };
 
 #endif
