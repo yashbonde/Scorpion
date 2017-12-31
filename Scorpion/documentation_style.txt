@@ -1,0 +1,31 @@
+===============================================================================================================
+
+Header file Starting
+
+/*
+<header file name> header file for Scorpion Framework, written for Texas Instruments
+Launchpad devices and Arduino. This framework aims to implement machine
+learning on small embedded devices.
+
+This header file <description of this header file>
+
+See license for legal queries.
+<year>, <author(s)>
+*/
+
+===============================================================================================================
+
+Source code starting
+
+/*
+<source file name> source file for Scorpion Framework for <header name> header file,
+written for Texas Instruments Launchpad devices and Arduino. This framework aims
+to implement machine learning on small embedded devices.
+
+This source file <description of this source file>
+
+See license for legal queries.
+<year>, <author(s)>
+*/
+
+===============================================================================================================
