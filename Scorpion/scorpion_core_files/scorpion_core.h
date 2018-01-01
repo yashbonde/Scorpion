@@ -7,7 +7,7 @@ This header file contain the definition of Matrix class which will be used
 in the scorpion framework.
 
 See license for legal queries.
-2017, Yash Bonde
+2017-2018, Yash Bonde
 */
 
 #ifndef SCORPION_CORE_H
@@ -20,17 +20,17 @@ See license for legal queries.
 #include<vector>
 
 // Matrix in Scorpion is a class
-class Matrix
-{
+class Matrix{
 public:
 	Matrix(std::vector<std::vector<float> > external_matrix);
+	void Matrix_Initializer(int x, int y, float fill);
 	std::vector<float> get_row(int row_num);
 	std::vector<float> get_col(int col_num);
 	// attribute functions
 	std::vector<int> shape();
-	std::vector<std::vector<float> > get_val();
+	std::vector<std::vector<float> > get_mat();
+	float get_val(int x, int y);
 private:
-	int x_, y_;
 	std::vector<int> shape_vec;
 	std::vector<std::vector<float> > core_matrix;
 };
