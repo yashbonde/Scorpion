@@ -22,7 +22,8 @@ Matrix::Matrix(std::vector<std::vector<float> > ex_matrix){
 }
 
 void Matrix::Matrix_Initializer(int x, int y, float fill){
-	shape_vec.push_back(x); shape_vec.push_back(y);
+	shape_vec.push_back(x); // number of rows
+	shape_vec.push_back(y); // number of columns
 	for(int i=0; i<x; i++){
 		std::vector<float> temp(y);
 		for(int j=0; j<y; j++){
@@ -45,11 +46,14 @@ std::vector<float> Matrix::get_col(int col_num){
 	if(col_num >= shape_vec[1] || col_num < 0){
 		throw std::string("[!]Trying to get column number %d, while maximum is %d", col_num, shape_vec[1]);
 	}
-	std::vector<float> col_;
+	// following lines are the way they are supposed to be and optimised
+	float *col_ = new float[shape_vec[0]];
 	for(int i=0; i<shape_vec[0]; i++){
-		col_.push_back(core_matrix[i][col_num]);
+		col_[i] = core_matrix[i][col_num];
 	}
-	return col_;
+	std::vector<float> v(col_, col_+shape_vec[0]);
+	delete [] col_;
+	return v;
 }
 
 // Functions telling the attribute of the Matrix
