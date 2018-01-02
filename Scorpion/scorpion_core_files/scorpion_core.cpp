@@ -14,6 +14,8 @@ See license for legal queries.
 #include<vector>
 #include "scorpion_core.h" // for accessing the matrix making ops
 
+//========= Public =========//  
+
 Matrix::Matrix(std::vector<std::vector<float> > ex_matrix){
 	shape_vec.push_back(ex_matrix.size()); // number of rows in the matrix
 	shape_vec.push_back(ex_matrix[0].size()); // number of columns in the matrix
@@ -21,7 +23,7 @@ Matrix::Matrix(std::vector<std::vector<float> > ex_matrix){
 	core_matrix = ex_matrix;
 }
 
-void Matrix::Matrix_Initializer(int x, int y, float fill){
+void Matrix::matrix_initializer(int x, int y, float fill){
 	shape_vec.push_back(x); // number of rows
 	shape_vec.push_back(y); // number of columns
 	for(int i=0; i<x; i++){
@@ -56,6 +58,13 @@ std::vector<float> Matrix::get_col(int col_num){
 	return v;
 }
 
+float Matrix::get_val(int x, int y){
+	// get the value at any position
+	return core_matrix.at(x).at(y);
+}
+
+//========= Private =========//
+
 // Functions telling the attribute of the Matrix
 std::vector<int> Matrix::shape(){
 	// shape vector of the Matrix
@@ -65,9 +74,4 @@ std::vector<int> Matrix::shape(){
 std::vector<std::vector<float> > Matrix::get_mat(){
 	// return the total matrix
 	return core_matrix;
-}
-
-float Matrix::get_val(int x, int y){
-	// get the value at any position
-	return core_matrix.at(x).at(y);
 }

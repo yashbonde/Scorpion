@@ -10,8 +10,8 @@ See license for legal queries.
 2017-2018, Yash Bonde
 */
 
-#ifndef SCORPION_CORE_H
-#define SCORPION_CORE_H
+#ifndef SCORPION_CORE_CORE_H_
+#define SCORPION_CORE_CORE_H_
 
 // this is the only header we need as this is the core and only defines
 // the matrix class, all the other files we use will include this header
@@ -23,7 +23,7 @@ See license for legal queries.
 class Matrix{
 public:
 	Matrix(std::vector<std::vector<float> > external_matrix);
-	void Matrix_Initializer(int x, int y, float fill);
+	void matrix_initializer(int x, int y, float fill);
 	std::vector<float> get_row(int row_num);
 	std::vector<float> get_col(int col_num);
 	// attribute functions
