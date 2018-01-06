@@ -1,4 +1,4 @@
-We will be using some of teh elements of google's style guide: https://google.github.io/styleguide/cppguide.html
+We will be using some of the elements of google's style guide: https://google.github.io/styleguide/cppguide.html
 
 ===============================================================================================================
 
