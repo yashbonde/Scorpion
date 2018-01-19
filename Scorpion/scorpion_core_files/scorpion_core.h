@@ -36,6 +36,9 @@ class Matrix{
     // operator overloading
     void operator = (Matrix);
     void operator = (float);
+    Matrix operator + (float);
+    Matrix operator - (float);
+    Matrix operator * (float);
 };
 
 Matrix :: Matrix(int num_of_rows, int num_of_cols) {
@@ -91,4 +94,34 @@ void Matrix :: operator = (float value) {
             base[i][j] = value;
         }
     }
+}
+
+Matrix Matrix :: operator + (float f) {
+    Matrix temp(no_of_rows, no_of_cols);
+    for (int i = 0; i < no_of_rows; i++) {
+        for (int j = 0; j < no_of_cols; j++) {
+            temp.base[i][j] = base[i][j] + f;
+        }
+    }
+    return temp;
+}
+
+Matrix Matrix :: operator - (float f) {
+    Matrix temp(no_of_rows, no_of_cols);
+    for (int i = 0; i < no_of_rows; i++) {
+        for (int j = 0; j < no_of_cols; j++) {
+            temp.base[i][j] = base[i][j] - f;
+        }
+    }
+    return temp;
+}
+
+Matrix Matrix :: operator * (float f) {
+    Matrix temp(no_of_rows, no_of_cols);
+    for (int i = 0; i < no_of_rows; i++) {
+        for (int j = 0; j < no_of_cols; j++) {
+            temp.base[i][j] = base[i][j] * f;
+        }
+    }
+    return temp;
 }
