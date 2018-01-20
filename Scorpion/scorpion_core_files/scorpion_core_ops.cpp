@@ -1,3 +1,5 @@
+/* NOW REDUNDANT */
+
 /*
 scorpion_core_ops source file for Scorpion Framework for scorpion_core_ops header file,
 written for Texas Instruments Launchpad devices and Arduino. This framework aims
@@ -9,7 +11,7 @@ algebra operations.
 See license for legal queries.
 2017-2018, Yash Bonde
 */
-
+/*
 #include<iostream>
 #include "scorpion_core.h" // Scorpion core to use for making Matrices
 #include "scorpion_core_ops.h" // Scorpion core ops
@@ -108,3 +110,4 @@ void CoreOps::shape_check(Matrix A, Matrix B, bool mul, std::string op){
 		throw std::string("[!] For %s the shapes must be same but got, (%d, %d) and (%d, %d)", op, ax, ay, bx, by);
 	}
 }
+*/
