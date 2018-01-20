@@ -1,3 +1,5 @@
+/* NOW REDUNDANT */
+
 /*
 scorpion_core source file for Scorpion Framework for scorpion_core header file,
 written for Texas Instruments Launchpad devices and Arduino. This framework aims
@@ -10,6 +12,7 @@ See license for legal queries.
 2017-2018, Yash Bonde
 */
 
+/*
 #include<iostream>
 #include<vector>
 #include "scorpion_core.h" // for accessing the matrix making ops
@@ -75,3 +78,4 @@ std::vector<std::vector<float> > Matrix::get_mat(){
 	// return the total matrix
 	return core_matrix;
 }
+*/
