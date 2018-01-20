@@ -19,6 +19,7 @@ Copyright 2017-2018, Yash Bonde
 
 class CoreOps{
  public:
+ 	// methods
     Matrix mat_add(Matrix, Matrix);
     Matrix mat_sub(Matrix, Matrix);
     Matrix mat_mul(Matrix, Matrix);
@@ -27,10 +28,15 @@ class CoreOps{
     Matrix adjoint(Matrix);  // find matrix adjoint
     Matrix inverse(Matrix);  // find inverse of a given matrix
  private:
-    void shape_check(Matrix, Matrix, bool, std::string);
+    void shape_check(Matrix, Matrix, bool, std::string); // add in
+    // each method so it improves the redundency
 };
 
+//========= Public =========//
 Matrix CoreOps :: mat_add(Matrix A, Matrix B) {
+	/*
+	Add the elements of Matrix A and B and make a new Matrix
+	*/
     Matrix temp(A.no_of_rows, A.no_of_cols);
     for (int i = 0; i < A.no_of_rows; ++i) {
         for (int j = 0; j < A.no_of_cols; ++j) {
@@ -41,6 +47,9 @@ Matrix CoreOps :: mat_add(Matrix A, Matrix B) {
 }
 
 Matrix CoreOps :: mat_sub(Matrix A, Matrix B) {
+	/*
+	Subtract the elements of Matrix B from A and make a new Matrix
+	*/
     Matrix temp(A.no_of_rows, A.no_of_cols);
     for (int i = 0; i < A.no_of_rows; ++i) {
         for (int j = 0; j < A.no_of_cols; ++j) {
@@ -51,6 +60,9 @@ Matrix CoreOps :: mat_sub(Matrix A, Matrix B) {
 }
 
 Matrix CoreOps :: mat_mul(Matrix A, Matrix B) {
+	/*
+	Return a Matrix multiplication of two matrices A and B
+	*/
     Matrix temp(A.no_of_rows, B.no_of_cols);
     temp = 0;
     for (int i = 0; i < A.no_of_rows; ++i) {
@@ -64,6 +76,9 @@ Matrix CoreOps :: mat_mul(Matrix A, Matrix B) {
 }
 
 Matrix CoreOps :: element_wise_matmul(Matrix A, Matrix B) {
+	/*
+	Return a Matrix element wise multiplication of two matrices A and B
+	*/
     Matrix temp(A.no_of_rows, A.no_of_cols);
     for (int i = 0; i < A.no_of_rows; ++i) {
         for (int j = 0; j < A.no_of_cols; ++j) {
@@ -74,13 +89,22 @@ Matrix CoreOps :: element_wise_matmul(Matrix A, Matrix B) {
 }
 
 float CoreOps :: determinant(Matrix A) {
+	/*
+	Return the determinant of matrix A
+	*/
     return 0.5;  // to be built
 }
 
 Matrix CoreOps :: adjoint(Matrix A) {
+	/*
+	Return the adjoint of Matrix A
+	*/
     return A;  // to be built
 }
 
 Matrix CoreOps :: inverse(Matrix A) {
+	/*
+	Return the inverse of Matrix A
+	*/
     return A;  // to be built
 }
