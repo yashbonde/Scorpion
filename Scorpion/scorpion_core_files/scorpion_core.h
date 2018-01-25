@@ -21,8 +21,9 @@ Copyright 2017-2018, Yash Bonde
 class Matrix{
  public:
     float **base;  // Matrix
-    int no_of_rows;
-    int no_of_cols;
+    // can we remove these ?
+    int no_of_rows; // will always be equal to col len
+    int no_of_cols; // will always be equal to row len
     int row_size;
     int col_size;
 
