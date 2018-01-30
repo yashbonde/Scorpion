@@ -69,7 +69,7 @@ Matrix CoreLayers::relu(Matrix input_matrix) {
     Matrix temp(input_matrix.no_of_rows, input_matrix.no_of_cols);
     for (int i = 0; i < temp.no_of_rows; ++i) {
         for (int j = 0; j < temp.no_of_cols; ++j) {
-            temp[i][j] = (input_matrix[i][j]?input_matrix[i][j] > 0:0);
+            temp[i][j] = (input_matrix[i][j]>0?input_matrix[i][j]:0);
         }
     }
     return temp;
@@ -80,6 +80,34 @@ Matrix CoreLayers::softmax(Matrix input_matrix, char axis) {
     Perform for each value in Matrix of shape [1, len] x,
         softmax activation (e^(x)/ sum(e^(x[i])))
     */
+    Matrix temp(input_matrix.no_of_rows, input_matrix.no_of_cols);
+    if (axis == 'h') {
+        //  row wise
+        for (int i = 0; i < input_matrix.col_size; ++i) {
+            float sum = 0;
+            for (int j = 0; j < input_matrix.row_size; ++j) {
+                sum += exp(input_matrix[i][j]);
+            }
+            for (int j = 0; j < input_matrix.row_size; ++j) {
+                temp[i][j] = exp(input_matrix[i][j])/sum;
+            }
+        }
+    } else if (axis == 'v') {
+        //  column wise
+        for (int i = 0; i < input_matrix.row_size; ++i) {
+            float sum = 0;
+            for (int j = 0; j < input_matrix.col_size; ++j) {
+                sum += exp(input_matrix[i][j]);
+            }
+            for (int j = 0; j < input_matrix.col_size; ++j) {
+                temp[i][j] = exp(input_matrix[i][j])/sum;
+            }
+        }
+    } else {
+        //  throw an error
+        // std::cerr << "Error in softmax" << "\n";
+    }
+    return temp;
 }
 
 // Ops
