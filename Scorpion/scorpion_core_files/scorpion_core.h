@@ -22,8 +22,8 @@ class Matrix{
  public:
     float **base;  // Matrix
     // can we remove these ?
-    int no_of_rows; // will always be equal to col len
-    int no_of_cols; // will always be equal to row len
+    int no_of_rows;  // will always be equal to col len
+    int no_of_cols;  // will always be equal to row len
     int row_size;
     int col_size;
 
@@ -150,7 +150,7 @@ Matrix Matrix :: operator - (float f) {
 
 Matrix Matrix :: operator * (float f) {
 	/*
-	Mulitply float value f to all the elements of Matrix
+	Multiply float value f to all the elements of Matrix
 	*/
     Matrix temp(no_of_rows, no_of_cols);
     for (int i = 0; i < no_of_rows; i++) {
