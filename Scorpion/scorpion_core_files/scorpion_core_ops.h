@@ -26,6 +26,7 @@ class CoreOps{
     Matrix element_wise_matmul(Matrix, Matrix);
     float determinant(Matrix);  // |A|
     Matrix adjoint(Matrix);  // find matrix adjoint
+    Matrix transpose(Matrix);  // find matrix transpose
     Matrix inverse(Matrix);  // find inverse of a given matrix
     Martrix reshape(Matrix, new_shape_arr[]); // reshape the given matrix to new shape given by array
     // the reshape should have a subroutine to check is the shape change is possible
@@ -122,7 +123,7 @@ Matrix CoreOps::reshape(Matrix A, int new_shape_arr[]) {
     */
 }
 
-Matrix CoreOps::argmax(Matrix A, int axis = 0){
+Matrix CoreOps::argmax(Matrix A, int axis = 0) {
     /*
     let any Matrix A be
     [[1 2 3]
@@ -137,9 +138,19 @@ Matrix CoreOps::argmax(Matrix A, int axis = 0){
     */
 }
 
-//========= Private =========//  
 
-bool verify_new_shape(int old_shape[], int new_shape[]){
+Matrix CoreOps::transpose(matrix A) {
+    Matrix B(A.no_of_rows, A.no_of_cols);
+    for (int i = 0; i < A.no_of_cols; ++i) {
+        for (int j = 0; j < A.no_of_rows; ++j) {
+            B.base[j][i] = A.base[i][j];
+        }
+    }
+    return B;
+}
+//========= Private =========//
+
+bool verify_new_shape(int old_shape[], int new_shape[]) {
     /*
     If shape change is possible, return True, else return False
     */
