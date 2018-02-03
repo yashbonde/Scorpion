@@ -21,7 +21,6 @@ Copyright 2017-2018, Yash Bonde
 class Matrix{
  public:
     float **base;  // Matrix
-    // can we remove these ?
     int no_of_rows;  // will always be equal to col len
     int no_of_cols;  // will always be equal to row len
     int row_size;
@@ -100,6 +99,27 @@ void Matrix :: equate_2d_matrix(float *arr, int num_of_rows, int num_of_cols) {
 }
 
 //========= Operator Overloading =========//
+
+// Can we add operator overloading here for CoreOps
+// that we we can automatically determine the new shape and everthing
+// we can assign stuff properly
+
+void Matrix :: operator = (Matrix A) {
+    // run code to see if shape is correct
+    if (_shape_same(A)){
+        // code to run the shit
+    }
+}
+
+// ==== Private Function 
+bool _shape_same(Matrix A) {
+    if (A.row_size == row_size && A.col_size == col_size){
+        return True;
+    }
+    // throw error and explain the problem
+    return False;
+}
+
 void Matrix :: operator = (Matrix A) {
 	/*
 	Assign the same value as current Matrix to a new Matrix A
