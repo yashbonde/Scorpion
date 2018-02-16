@@ -3,6 +3,8 @@
 #include "../scorpion_layers/core_layers.h"
 CoreLayers c;
 
+#define p(i) std::cout<<i<<'\n'
+
 void test_sigmoid() {
     bool flag = true;
     float a[3][5] = {
@@ -21,8 +23,9 @@ void test_sigmoid() {
     RES = c.sigmoid(A);
     for(int i=0;i<3;i++) {
         for(int j=0;j<5;j++) {
-            if(abs(RES.base[i][j]-ans[i][j])>0.001) {
-                std::cout<<"Error in Sigmoid:\n i: "<<i<<"\nj: "<<j<<"\n Expected value: "<<ans[i][j]<<"\nResult: "<<RES.base[i][j];
+            // p(std::abs(RES.base[i][j]-ans[i][j]));
+            if(std::abs(RES.base[i][j]-ans[i][j])>0.001) {
+                std::cout<<"Error in Sigmoid:\ni: "<<i<<"\nj: "<<j<<"\nExpected value: "<<ans[i][j]<<"\nResult: "<<RES.base[i][j]<<'\n';
                 flag = false;
             }
         }
