@@ -12,13 +12,12 @@ See license for legal queries.
 
 #ifndef SCORPION_CORE_LAYERS_H_
 #define SCORPION_CORE_LAYERS_H_
-#endif
 
 #include <cmath>
 #include <vector>
-#include "../scorpion_core/scorpion_core.h"  // defines the Matrix
-#include "../scorpion_core/scorpion_core_ops.h"  // defines the core operations
-#include "core_layers.h"  // header file
+#include "../scorpion_core_files/scorpion_core.h"  // defines the Matrix
+#include "../scorpion_core_files/scorpion_core_ops.h"  // defines the core operations
+//#include "core_layers.h"  // header file
 
 class CoreLayers{
  public:
@@ -46,7 +45,7 @@ Matrix CoreLayers::sigmoid(Matrix input_matrix) {
     Matrix temp(input_matrix.no_of_rows, input_matrix.no_of_cols);
     for (int i = 0; i < temp.no_of_rows; ++i) {
         for (int j = 0; j < temp.no_of_cols; ++j) {
-            temp[i][j] = 1.0/(1.0+exp(-input_matrix[i][j]));
+            temp.base[i][j] = 1.0/(1.0+exp(-input_matrix.base[i][j]));
         }
     }
     return temp;
@@ -59,7 +58,7 @@ Matrix CoreLayers::tanh(Matrix input_matrix) {
     Matrix temp(input_matrix.no_of_rows, input_matrix.no_of_cols);
     for (int i = 0; i < temp.no_of_rows; ++i) {
         for (int j = 0; j < temp.no_of_cols; ++j) {
-            temp[i][j] = (exp(2.0*input_matrix[i][j])-1.0)/(exp(2.0*input_matrix[i][j])+1.0);
+            temp.base[i][j] = (exp(2.0*input_matrix.base[i][j])-1.0)/(exp(2.0*input_matrix.base[i][j])+1.0);
         }
     }
     return temp;
@@ -72,7 +71,7 @@ Matrix CoreLayers::relu(Matrix input_matrix) {
     Matrix temp(input_matrix.no_of_rows, input_matrix.no_of_cols);
     for (int i = 0; i < temp.no_of_rows; ++i) {
         for (int j = 0; j < temp.no_of_cols; ++j) {
-            temp[i][j] = (input_matrix[i][j]>0?input_matrix[i][j]:0);
+            temp.base[i][j] = (input_matrix.base[i][j]>0?input_matrix.base[i][j]:0);
         }
     }
     return temp;
@@ -89,10 +88,10 @@ Matrix CoreLayers::softmax(Matrix input_matrix, char axis) {
         for (int i = 0; i < input_matrix.col_size; ++i) {
             float sum = 0;
             for (int j = 0; j < input_matrix.row_size; ++j) {
-                sum += exp(input_matrix[i][j]);
+                sum += exp(input_matrix.base[i][j]);
             }
             for (int j = 0; j < input_matrix.row_size; ++j) {
-                temp[i][j] = exp(input_matrix[i][j])/sum;
+                temp.base[i][j] = exp(input_matrix.base[i][j])/sum;
             }
         }
     } else if (axis == 'v') {
@@ -100,10 +99,10 @@ Matrix CoreLayers::softmax(Matrix input_matrix, char axis) {
         for (int i = 0; i < input_matrix.row_size; ++i) {
             float sum = 0;
             for (int j = 0; j < input_matrix.col_size; ++j) {
-                sum += exp(input_matrix[i][j]);
+                sum += exp(input_matrix.base[i][j]);
             }
             for (int j = 0; j < input_matrix.col_size; ++j) {
-                temp[i][j] = exp(input_matrix[i][j])/sum;
+                temp.base[i][j] = exp(input_matrix.base[i][j])/sum;
             }
         }
     } else {
@@ -118,34 +117,39 @@ Matrix CoreLayers::flatten(Matrix input_matrix) {
     /*
     Call core ops reshape function and convert to [1, no_rows*no_cols]
     */
-    Matrix reshaped_matrix = CoreOps::reshape(input_matrix, [1, input_matrix.no_of_rows * input_matrix.no_of_cols]);
-    return reshaped_matrix;
+    int arr[] = {1, input_matrix.no_of_rows * input_matrix.no_of_cols};
+    // commented following lines so as code can compile 
+    // reshaped matrix need args for constructor
+    //Matrix reshaped_matrix = CoreOps::reshape(input_matrix, arr);
+    //return reshaped_matrix;
 }
 
 std::vector<float> CoreLayers::reduce_add(Matrix input_matrix, char axis = 'a') {
     // returns sum of rows or columns
+    std::vector<float> v;
     if (axis == 'h') {
         // returns sum of each row
-        std::vector<float> v(input_matrix.col_size, 0);
+        v = std::vector<float>(input_matrix.col_size, 0);
         for (int i = 0; i < input_matrix.col_size; ++i) {
             for (int j = 0; j < input_matrix.row_size; ++j) {
-                v[i] += input_matrix[i][j];
+                v[i] += input_matrix.base[i][j];
             }
         }
     } else if (axis == 'v') {
         // returns sum of each column
-        std::vector<float> v(input_matrix.row_size, 0);
+        v = std::vector<float>(input_matrix.row_size, 0);
         for (int i = 0; i < input_matrix.row_size; ++i) {
             for (int j = 0; j < input_matrix.col_size; ++j) {
-                v[i] += input_matrix[i][j];
+                v[i] += input_matrix.base[i][j];
             }
         }
     } else if (axis == 'a') {
         // returns sum of matrix
-        std::vector<float> v(1, 0);
+        v = std::vector<float>(1, 0);
+        double sum = 0;
         for (int i = 0; i < input_matrix.row_size; ++i) {
             for (int j = 0; j < input_matrix.col_size; ++j) {
-                sum += input_matrix[i][j];
+                sum += input_matrix.base[i][j];
             }
         }
     } else {
@@ -166,23 +170,24 @@ std::vector<float> CoreLayers::reduce_mean(Matrix input_matrix, char axis = 'a')
     reduce_mean(A, axis = v) --> return mean of values from each column
     reduce_mean(A, axis = a) --> return mean of values from matrix
     */
+    std::vector<float> v;
     if (axis == 'h') {
         // returns mean of each row
-        std::vector<float> v(input_matrix.col_size);
+        v = std::vector<float> (input_matrix.col_size);
         v = reduce_add(input_matrix, axis);
         for (int i = 0; i < input_matrix.col_size; ++i) {
             v[i] /= input_matrix.row_size;
         }
     } else if (axis == 'v') {
         // returns mean of each column
-        std::vector<float> v(input_matrix.row_size);
+        v = std::vector<float> (input_matrix.row_size);
         v = reduce_add(input_matrix, axis);
         for (int i = 0; i < input_matrix.row_size; ++i) {
             v[i] /= input_matrix.col_size;
         }
     } else if (axis == 'a') {
         // returns mean of matrix
-        std::vector<float> v(1);
+        v = std::vector<float> (1);
         v = reduce_add(input_matrix, axis);
         v[0] /= (input_matrix.col_size * input_matrix.row_size);
     } else {
@@ -191,3 +196,4 @@ std::vector<float> CoreLayers::reduce_mean(Matrix input_matrix, char axis = 'a')
     }
     return v;
 }
+#endif

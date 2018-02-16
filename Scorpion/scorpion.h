@@ -1,8 +1,8 @@
-#include "/scorpion_core/scorpion_core.h"
-#include "/scorpion_core/scorpion_core_ops.h"
-#include "/scorpion_layers/core_layers.h"
+#include "./scorpion_core_files/scorpion_core.h"
+#include "./scorpion_core_files/scorpion_core_ops.h"
+#include "./scorpion_layers/core_layers.h"
 
-#include "scorpion.h"
+//#include "scorpion.h"
 
 /*
 This is just a road map file for scorpion.h, the function that will actually be called
