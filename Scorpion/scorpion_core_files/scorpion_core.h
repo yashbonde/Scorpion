@@ -14,6 +14,7 @@ Copyright 2017-2018, Yash Bonde
 #define SCORPION_SCORPION_CORE_FILES_SCORPION_CORE_H_
 
 #include<iostream>
+#include<iomanip>
 #include<vector>
 
 // Matrix in Scorpion is a class
@@ -34,6 +35,7 @@ class Matrix{
     std::vector<float> get_row(int);
     std::vector<float> get_column(int);
     void equate_2d_matrix(float *, int, int);
+    void print();
 
     // operator overloading
     void operator = (Matrix);
@@ -77,6 +79,14 @@ std::vector<float> Matrix :: get_row(int row_num) {
         temp[i] = base[row_num][i];
     }
     return temp;
+}
+
+void Matrix :: print() {
+    for (int i = 0; i < no_of_rows; ++i) {
+        for (int j = 0; j < no_of_cols; ++j) {
+            std::cout << std::right << std::setw(10) << base[i][j] << " \n"[j == no_of_cols - 1];
+        }
+    }
 }
 
 std::vector<float> Matrix :: get_column(int) {
