@@ -7,7 +7,7 @@ This header file contains the core operations for linear algebra. We need to cal
 this file to work on matrix operations.
 
 See license for legal queries.
-Copyright 2017-2018, Yash Bonde
+Copyright 2017-2018, Yash Bonde, Arpit Chaudhary
 */
 
 #ifndef SCORPION_SCORPION_CORE_FILES_SCORPION_CORE_OPS_H_
@@ -30,6 +30,8 @@ class CoreOps{
     Matrix inverse(Matrix);  // find inverse of a given matrix
     Matrix reshape(Matrix, int new_shape_arr[]); // reshape the given matrix to new shape given by array
     // the reshape should have a subroutine to check is the shape change is possible
+    Matrix concatenate(Matrix, Matrix, int); // concatenate any two matrices according to axis
+    Matrix stack(Matrix, Matrix, int); // stack any two input matrices according to axis
     std::vector<double> argmax(Matrix, int);
  private:
     void shape_check(Matrix, Matrix, bool, std::string); // add in
@@ -109,6 +111,19 @@ Matrix CoreOps :: adjoint(Matrix A) {
     return A;  // to be built
 }
 
+Matrix CoreOps::transpose(Matrix A) {
+    /*
+    Returns the transpose of a matrix
+    */
+    Matrix B(A.no_of_rows, A.no_of_cols);
+    for (int i = 0; i < A.no_of_cols; ++i) {
+        for (int j = 0; j < A.no_of_rows; ++j) {
+            B.base[j][i] = A.base[i][j];
+        }
+    }
+    return B;
+}
+
 Matrix CoreOps :: inverse(Matrix A) {
     /*
     Return the inverse of Matrix A
@@ -120,6 +135,47 @@ Matrix CoreOps::reshape(Matrix A, int new_shape_arr[]) {
     /*
     Reshape the input Matrix to new shape and also have a subroutine to check if
     such a shape change is possible
+    */
+}
+
+Matrix CoreOps::concatenate(Matrix A, Matrix b, int axis){
+    /*
+    a = array([[1, 2], [3, 4]])
+    b = array([[5, 6]])
+
+    Case # 1 --> axis = 0
+    concatenate((a, b), axis=0)
+    op --> array([[1, 2],
+          [3, 4],
+          [5, 6]])
+
+    Case # 2 --> axis = 1
+    * b.T means transpose of b
+    concatenate((a, b.T), axis=1)
+    op --> array([[1, 2, 5],
+           [3, 4, 6]])
+    */
+}
+
+Matrix CoreOps::stack(Matrix A, Matrix b, int axis){
+    /*
+    a = array([1, 2, 3])
+    b = array([2, 3, 4])
+    
+    Case #1
+    stack((a, b), axis = 0)
+    op --> array([1, 2, 3, 2, 3, 4])
+
+    Case #1
+    stack((a, b), axis = 1)
+    op --> array([[1, 2, 3],
+           [2, 3, 4]])
+    
+    Case #2
+    stack((a, b), axis=-1)
+    op --> array([[1, 2],
+           [2, 3],
+           [3, 4]])
     */
 }
 
@@ -138,17 +194,6 @@ std::vector<double> CoreOps::argmax(Matrix A, int axis = 0) {
     */
     std::vector <double> v;
     return v;
-}
-
-
-Matrix CoreOps::transpose(Matrix A) {
-    Matrix B(A.no_of_rows, A.no_of_cols);
-    for (int i = 0; i < A.no_of_cols; ++i) {
-        for (int j = 0; j < A.no_of_rows; ++j) {
-            B.base[j][i] = A.base[i][j];
-        }
-    }
-    return B;
 }
 //========= Private =========//
 
