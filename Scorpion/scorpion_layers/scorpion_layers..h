@@ -98,14 +98,16 @@ std::vector<Matrix> lstm_cell(Matrix input_, Matrix hidden_prev, Matrix prev_cel
 	Matrix curr_cell_state = CoreOps.mat_add(CoreOps.mat_mul(W_c, input_), CoreOps.mat_mul(U_c, hidden_prev))
 	curr_cell_state = CoreOps.mat_add(curr_cell_state, b_c)
 	curr_cell_state = CoreLayers.tanh(curr_cell_state)
-	curr_cell_state = CoreOps.element_wise_matmul(curr_cell_state * input_gate)
+	curr_cell_state = CoreOps.element_wise_matmul(curr_cell_state, input_gate)
 	curr_cell_state = CoreOps.mat_add(CoreOps.element_wise_matmul(forget_gate, prev_cell_state), curr_cell_state)
 
 	// output of cell
 	Matrix cell_output = CoreOps.element_wise_matmul(output_gate, CoreOps.tanh(curr_cell_state))
 
 	// make final vector
-
+	std::vector<Matrix> final_vector(2);
+	final_vector[0] = curr_cell_state;
+	final_vector[1] = cell_output;
 
 	// return the vector
 	return final_vector
@@ -152,14 +154,16 @@ std::vector<Matrix> peephole_lstm_cell(Matrix input_, Matrix prev_cell_state,
 	Matrix curr_cell_state = CoreOps.mat_add(CoreOps.mat_mul(W_c, input_), CoreOps.mat_mul(U_c, prev_cell_state))
 	curr_cell_state = CoreOps.mat_add(curr_cell_state, b_c)
 	curr_cell_state = CoreLayers.tanh(curr_cell_state)
-	curr_cell_state = CoreOps.element_wise_matmul(curr_cell_state * input_gate)
+	curr_cell_state = CoreOps.element_wise_matmul(curr_cell_state, input_gate)
 	curr_cell_state = CoreOps.mat_add(CoreOps.element_wise_matmul(forget_gate, prev_cell_state), curr_cell_state)
 
 	// output of cell
 	Matrix cell_output = CoreOps.element_wise_matmul(output_gate, CoreOps.tanh(curr_cell_state))
 
 	// make final vector
-
+	std::vector<Matrix> final_vector;
+	final_vector[0] = curr_cell_state;
+	final_vector[1] = cell_output
 
 	// return the vector
 	return final_vector
