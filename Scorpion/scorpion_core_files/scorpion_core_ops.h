@@ -15,6 +15,7 @@ Copyright 2017-2018, Yash Bonde, Arpit Chaudhary
 
 #include <string>
 #include <vector>
+#include <limits>
 #include "scorpion_core.h"  // defining the matrix
 
 class CoreOps{
@@ -32,7 +33,7 @@ class CoreOps{
     // the reshape should have a subroutine to check is the shape change is possible
     Matrix concatenate(Matrix, Matrix, int); // concatenate any two matrices according to axis
     Matrix stack(Matrix, Matrix, int); // stack any two input matrices according to axis
-    std::vector<double> argmax(Matrix, int);
+    std::vector<float> argmax(Matrix, int);
  private:
     void shape_check(Matrix, Matrix, bool, std::string); // add in
     // each method so it improves the redundency
@@ -138,7 +139,7 @@ Matrix CoreOps::reshape(Matrix A, int new_shape_arr[]) {
     */
 }
 
-Matrix CoreOps::concatenate(Matrix A, Matrix b, int axis){
+Matrix CoreOps::concatenate(Matrix A, Matrix B, int axis = 0){
     /*
     a = array([[1, 2], [3, 4]])
     b = array([[5, 6]])
@@ -155,9 +156,47 @@ Matrix CoreOps::concatenate(Matrix A, Matrix b, int axis){
     op --> array([[1, 2, 5],
            [3, 4, 6]])
     */
+    Matrix error(1,1);
+    if (axis == 0) {
+        if(A.row_size == B.row_size) {
+            int rowa = A.no_of_rows;
+            int rowb = B.no_of_rows;
+            int cols = A.no_of_cols;
+            Matrix temp(rowa+rowb, cols);
+            for (int j=0;j<cols;j++) {
+                for (int i = 0; i<rowa; i++)
+                    temp.base[i][j] = A.base[i][j];
+                for (int i=rowa; i<rowa+rowb;i++)
+                    temp.base[i][j] = B.base[i-rowa][j];
+            }
+            return temp;
+        }
+        else {
+            std::cout<<"error in concatenate\n";
+        }
+    }
+    else if (axis == 1) {
+        if(A.col_size = B.col_size) {
+            int rows = A.no_of_rows;
+            int cola = A.no_of_cols;
+            int colb = B.no_of_cols;
+            Matrix temp(rows, cola+colb);
+            for (int i=0;i<rows;i++) {
+                for (int j = 0; j<cola; j++)
+                    temp.base[i][j] = A.base[i][j];
+                for (int j=rowa; j<cola+colb;i++)
+                    temp.base[i][j] = B.base[i][j-cola];
+            }
+            return temp;
+        }
+        else {
+            std::cout<<"error in concatenate\n";
+        }
+    }
+    return error;
 }
 
-Matrix CoreOps::stack(Matrix A, Matrix b, int axis){
+Matrix CoreOps::stack(Matrix A, Matrix B, int axis){
     /*
     a = array([1, 2, 3])
     b = array([2, 3, 4])
@@ -179,7 +218,7 @@ Matrix CoreOps::stack(Matrix A, Matrix b, int axis){
     */
 }
 
-std::vector<double> CoreOps::argmax(Matrix A, int axis = 0) {
+std::vector<float> CoreOps::argmax(Matrix A, int axis = 0) {
     /*
     let any Matrix A be
     [[1 2 3]
@@ -192,7 +231,33 @@ std::vector<double> CoreOps::argmax(Matrix A, int axis = 0) {
     argmax(A, axis = 1) --> return index array in each vector. So this will return
         [2,2,2]
     */
-    std::vector <double> v;
+    std::vector <float> v;
+    if (axis == 0) {
+        float max = std::numeric_limits<float>::min();
+        int pos = -1;
+        for (int j=0; j<A.row_size; j++) {
+            for (int i=0;i<A.col_size; i++) {
+                if(A.base[i][j] > max) {
+                    max = A.base[i][j];
+                    pos = (row_size * i) + j;
+                }
+            }
+        }
+        v.push_back(pos);
+    }
+    else if (axis = 1) {
+        for (int i = 0; i<A.no_of_rows; i++) {
+            float max = std::numeric_limits<float>::min();
+            int pos = -1;
+            for(int j=0; j< A.no_of_cols; j++) {
+                if(A.base[i][j] > max) {
+                    max = a.base[i][j];
+                    pos = j;
+                }
+            }
+            v.push_back(pos);
+        }
+    }
     return v;
 }
 //========= Private =========//
