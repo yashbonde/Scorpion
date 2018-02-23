@@ -161,7 +161,7 @@ std::vector<Matrix> peephole_lstm_cell(Matrix input_, Matrix prev_cell_state,
 	Matrix cell_output = CoreOps.element_wise_matmul(output_gate, CoreOps.tanh(curr_cell_state))
 
 	// make final vector
-	std::vector<Matrix> final_vector;
+	std::vector<Matrix> final_vector(2);
 	final_vector[0] = curr_cell_state;
 	final_vector[1] = cell_output
 
