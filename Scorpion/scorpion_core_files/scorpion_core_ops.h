@@ -138,7 +138,7 @@ Matrix CoreOps::reshape(Matrix A, int new_shape_arr[]) {
     */
 }
 
-Matrix CoreOps::concatenate(Matrix A, Matrix b, int axis){
+Matrix CoreOps::concatenate(Matrix A, Matrix B, int axis = 0){
     /*
     a = array([[1, 2], [3, 4]])
     b = array([[5, 6]])
@@ -155,9 +155,43 @@ Matrix CoreOps::concatenate(Matrix A, Matrix b, int axis){
     op --> array([[1, 2, 5],
            [3, 4, 6]])
     */
+    if (axis == 0) {
+        if(A.row_size == B.row_size) {
+            int rowa = A.no_of_rows;
+            int rowb = B.no_of_rows;
+            int cols = A.no_of_cols;
+            Matrix temp(rowa+rowb, cols);
+            for (int j=0;j<cols;j++) {
+                for (int i = 0; i<rowa; i++)
+                    temp.base[i][j] = A.base[i][j];
+                for (int i=rowa; i<rowa+rowb;i++)
+                    temp.base[i][j] = B.base[i-rowa][j];
+            }
+        }
+        else {
+            std::cout<<"error in concatenate\n";
+        }
+    }
+    else if (axis == 1) {
+        if(A.col_size = B.col_size) {
+            int rows = A.no_of_rows;
+            int cola = A.no_of_cols;
+            int colb = B.no_of_cols;
+            Matrix temp(rows, cola+colb);
+            for (int i=0;i<rows;i++) {
+                for (int j = 0; j<cola; j++)
+                    temp.base[i][j] = A.base[i][j];
+                for (int j=rowa; j<cola+colb;i++)
+                    temp.base[i][j] = B.base[i][j-cola];
+            }
+        }
+        else {
+            std::cout<<"error in concatenate\n";
+        }
+    }
 }
 
-Matrix CoreOps::stack(Matrix A, Matrix b, int axis){
+Matrix CoreOps::stack(Matrix A, Matrix B, int axis){
     /*
     a = array([1, 2, 3])
     b = array([2, 3, 4])
