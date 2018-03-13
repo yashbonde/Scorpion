@@ -39,7 +39,7 @@ public:
 	 	};
 	 	~RNNWrapper();
 	 	
-	 	std::pair<std::vector<float>, std::vector<float> > execute(); // code to execute the input to the RNNWrapper cell
+	 	std::pair<Matrix, Matrix> execute(); // code to execute the input to the RNNWrapper cell
 
 	 private:
 	 	// all the information about the RNN wrapper is stored here
@@ -51,7 +51,7 @@ private:
 	// all the information about a single layer is kept here
 };
 
-std::pair<std::vector<float>, std::vector<float> >ScorpionOps::RNNWrapper::execute(Matrix input, Matrix prev_state){
+std::pair<Matrix, Matrix> ScorpionOps::RNNWrapper::execute(Matrix input, Matrix prev_state){
 	//
 	// I assume input matrix is of dimensions(UNITS, X) and prev_state is of (1, X)
 	Matrix output;
