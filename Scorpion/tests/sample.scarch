@@ -1,0 +1,19 @@
+{
+    "model_name" : "model1",
+    "layers" : [
+        {
+            "layer_name": "layer1",
+            "type": "type1",
+            "input_dim": "10",
+            "output_dim": "20",
+            "activation": "sigmoid"
+        },
+        {
+            "layer_name": "layer2",
+            "type": "type2",
+            "input_dim": "30",
+            "output_dim": "40",
+            "activation": "softmax"
+        }
+    ]
+}

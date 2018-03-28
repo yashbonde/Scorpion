@@ -9,7 +9,6 @@ scorpion module
 See license for legal queries.
 2017-2018 , Yash Bonde
 */
-#define UNITS 40
 
 #include <vector>
 
@@ -51,12 +50,12 @@ private:
 	// all the information about a single layer is kept here
 };
 
-std::pair<Matrix, Matrix> ScorpionOps::RNNWrapper::execute(Matrix input, Matrix prev_state){
+std::pair<Matrix, Matrix> ScorpionOps::RNNWrapper::execute(Matrix input, Matrix prev_state, int num_units){
 	//
-	// I assume input matrix is of dimensions(UNITS, X) and prev_state is of (1, X)
+	// I assume input matrix is of dimensions(num_units, X) and prev_state is of (1, X)
 	Matrix output;
 	vector<Matrix> temp;
-	for (int i = 0; i < UNITS; i++) {
+	for (int i = 0; i < num_units; i++) {
 		temp = lstm_cell(input.get_row(i), hidden, prev_state,
 		                 W_f, U_f, b_f,
 		                 W_i, U_i, b_i,
@@ -65,5 +64,5 @@ std::pair<Matrix, Matrix> ScorpionOps::RNNWrapper::execute(Matrix input, Matrix 
 		prev_state = temp[0];
 		output = temp[1];
 	}
-	return {output, prev_state};// returns output after every UNITS(40) iterations along with current state
+	return {output, prev_state};// returns output after every num_units(40) iterations along with current state
 }
