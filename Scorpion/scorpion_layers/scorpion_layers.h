@@ -83,29 +83,31 @@ std::vector<Matrix> lstm_cell(Matrix input_, Matrix hidden_prev, Matrix prev_cel
     */
 
     // forget gate
-    Matrix forget_gate = CoreOps.mat_add(CoreOps.mat_mul(W_f, input_), CoreOps.mat_mul(U_f, hidden_prev))
-    forget_gate = CoreOps.mat_add(forget_gate, b_f)
-    forget_gate = CoreLayers.sigmoid(forget_gate)
+    CoreOps c;
+    CoreLayers cl;
+    Matrix forget_gate = c.mat_add(c.mat_mul(W_f, input_), c.mat_mul(U_f, hidden_prev));
+    forget_gate = c.mat_add(forget_gate, b_f);
+    forget_gate = cl.sigmoid(forget_gate);
 
     // input gate
-    Matrix input_gate = CoreOps.mat_add(CoreOps.mat_mul(W_i, input_), CoreOps.mat_mul(U_i, hidden_prev))
-    input_gate = CoreOps.mat_add(input_gate, b_i)
-    input_gate = CoreLayers.sigmoid(input_gate)
+    Matrix input_gate = c.mat_add(c.mat_mul(W_i, input_), c.mat_mul(U_i, hidden_prev));
+    input_gate = c.mat_add(input_gate, b_i);
+    input_gate = cl.sigmoid(input_gate);
 
     // output gate
-    Matrix output_gate = CoreOps.mat_add(CoreOps.mat_mul(W_o, input_), CoreOps.mat_mul(U_o, hidden_prev))
-    output_gate = CoreOps.mat_add(output_gate, b_o)
-    output_gate = CoreLayers.sigmoid(output_gate)
+    Matrix output_gate = c.mat_add(c.mat_mul(W_o, input_), c.mat_mul(U_o, hidden_prev));
+    output_gate = c.mat_add(output_gate, b_o);
+    output_gate = cl.sigmoid(output_gate);
 
     // cell state
-    Matrix curr_cell_state = CoreOps.mat_add(CoreOps.mat_mul(W_c, input_), CoreOps.mat_mul(U_c, hidden_prev))
-    curr_cell_state = CoreOps.mat_add(curr_cell_state, b_c)
-    curr_cell_state = CoreLayers.tanh(curr_cell_state)
-    curr_cell_state = CoreOps.element_wise_matmul(curr_cell_state, input_gate)
-    curr_cell_state = CoreOps.mat_add(CoreOps.element_wise_matmul(forget_gate, prev_cell_state), curr_cell_state)
+    Matrix curr_cell_state = c.mat_add(c.mat_mul(W_c, input_), c.mat_mul(U_c, hidden_prev));
+    curr_cell_state = c.mat_add(curr_cell_state, b_c);
+    curr_cell_state = cl.tanh(curr_cell_state);
+    curr_cell_state = c.element_wise_matmul(curr_cell_state, input_gate);
+    curr_cell_state = c.mat_add(c.element_wise_matmul(forget_gate, prev_cell_state), curr_cell_state);
 
     // output of cell
-    Matrix cell_output = CoreOps.element_wise_matmul(output_gate, CoreOps.tanh(curr_cell_state))
+    Matrix cell_output = c.element_wise_matmul(output_gate, cl.tanh(curr_cell_state));
 
     // make final vector
     std::vector<Matrix> final_vector(2);
@@ -113,7 +115,7 @@ std::vector<Matrix> lstm_cell(Matrix input_, Matrix hidden_prev, Matrix prev_cel
     final_vector[1] = cell_output;
 
     // return the vector
-    return final_vector
+    return final_vector;
 }
 
 std::vector<Matrix> peephole_lstm_cell(Matrix input_, Matrix prev_cell_state,
@@ -139,37 +141,39 @@ std::vector<Matrix> peephole_lstm_cell(Matrix input_, Matrix prev_cell_state,
     */
 
     // forget gate
-    Matrix forget_gate = CoreOps.mat_add(CoreOps.mat_mul(W_f, input_), CoreOps.mat_mul(U_f, prev_cell_state))
-    forget_gate = CoreOps.mat_add(forget_gate, b_f)
-    forget_gate = CoreLayers.sigmoid(forget_gate)
+    CoreOps c;
+    CoreLayers cl;
+    Matrix forget_gate = c.mat_add(c.mat_mul(W_f, input_), c.mat_mul(U_f, prev_cell_state));
+    forget_gate = c.mat_add(forget_gate, b_f);
+    forget_gate = cl.sigmoid(forget_gate);
 
     // input gate
-    Matrix input_gate = CoreOps.mat_add(CoreOps.mat_mul(W_i, input_), CoreOps.mat_mul(U_i, prev_cell_state))
-    input_gate = CoreOps.mat_add(input_gate, b_i)
-    input_gate = CoreLayers.sigmoid(input_gate)
+    Matrix input_gate = c.mat_add(c.mat_mul(W_i, input_), c.mat_mul(U_i, prev_cell_state));
+    input_gate = c.mat_add(input_gate, b_i);
+    input_gate = cl.sigmoid(input_gate);
 
     // output gate
-    Matrix output_gate = CoreOps.mat_add(CoreOps.mat_mul(W_o, input_), CoreOps.mat_mul(U_o, prev_cell_state))
-    output_gate = CoreOps.mat_add(output_gate, b_o)
-    output_gate = CoreLayers.sigmoid(output_gate)
+    Matrix output_gate = c.mat_add(c.mat_mul(W_o, input_), c.mat_mul(U_o, prev_cell_state));
+    output_gate = c.mat_add(output_gate, b_o);
+    output_gate = cl.sigmoid(output_gate);
 
     // cell state
-    Matrix curr_cell_state = CoreOps.mat_add(CoreOps.mat_mul(W_c, input_), CoreOps.mat_mul(U_c, prev_cell_state))
-    curr_cell_state = CoreOps.mat_add(curr_cell_state, b_c)
-    curr_cell_state = CoreLayers.tanh(curr_cell_state)
-    curr_cell_state = CoreOps.element_wise_matmul(curr_cell_state, input_gate)
-    curr_cell_state = CoreOps.mat_add(CoreOps.element_wise_matmul(forget_gate, prev_cell_state), curr_cell_state)
+    Matrix curr_cell_state = c.mat_add(c.mat_mul(W_c, input_), c.mat_mul(U_c, prev_cell_state));
+    curr_cell_state = c.mat_add(curr_cell_state, b_c);
+    curr_cell_state = cl.tanh(curr_cell_state);
+    curr_cell_state = c.element_wise_matmul(curr_cell_state, input_gate);
+    curr_cell_state = c.mat_add(c.element_wise_matmul(forget_gate, prev_cell_state), curr_cell_state);
 
     // output of cell
-    Matrix cell_output = CoreOps.element_wise_matmul(output_gate, CoreOps.tanh(curr_cell_state))
+    Matrix cell_output = c.element_wise_matmul(output_gate, cl.tanh(curr_cell_state));
 
     // make final vector
     std::vector<Matrix> final_vector(2);
     final_vector[0] = curr_cell_state;
-    final_vector[1] = cell_output
+    final_vector[1] = cell_output;
 
     // return the vector
-    return final_vector
+    return final_vector;
     
 }
 

@@ -5,6 +5,8 @@
 #include "./scorpion_core_files/scorpion_core.h"
 #include "./scorpion_core_files/scorpion_core_ops.h"
 #include "./scorpion_layers/core_layers.h"
+#include "./scorpion_layers/scorpion_layers.h"
+// #include "./scorpion_ops.h"
 #include "./external/json.hpp"
 
 using json = nlohmann::json;
@@ -24,6 +26,9 @@ class ScorpionModel{
     json model_name;
     json layers;
     std::vector<Matrix> weight;
+    std::vector<Matrix> bias;
+    std::vector<string> type;
+    std::vector<int> activation;
 
     // to make it usable
     void load_architecture(string arch) {
@@ -32,6 +37,18 @@ class ScorpionModel{
         i >> j;
         model_name = j["model_name"];
         layers = j["layers"];
+        for (int i = 0; i < layers.size(); i++) {
+            weight.push_back(Matrix(layers[i]["output_dim"].get<int>(), layers[i]["input_dim"].get<int>()));
+            bias.push_back(Matrix(layers[i]["output_dim"].get<int>(), 1));
+            type.push_back(layers[i]["type"].get<string>());
+            // activations
+            string act = layers[i]["activation"].get<string>();
+            if(act == "sigmoid") activation.push_back(1);
+            else if(act == "tanh") activation.push_back(2);
+            else if(act == "relu") activation.push_back(3);
+            else if(act == "softmax") activation.push_back(4);
+            else activation.push_back(5);
+        }
     }
 
     void load_parameters(string params) {
@@ -40,10 +57,15 @@ class ScorpionModel{
         i >> j;
     }
 
-    int predict(float input_signal[]) {
+    int predict(Matrix inp) {
         /*
         Do the ops call scorpion_core_layers.h for this
         */
+        ScorpionLayer sl;
+        for (int i = 0; i < layers.size(); i++) {
+            if(type[i] == "dense") inp = sl.dense(inp, weight[i], bias[i], activation[i]);
+        }
+        return 0;
     }
 
     void view_pred(int len) {

@@ -4,15 +4,15 @@
         {
             "layer_name": "layer1",
             "type": "dense",
-            "input_dim": "10",
-            "output_dim": "20",
+            "input_dim": 10,
+            "output_dim": 20,
             "activation": "sigmoid"
         },
         {
             "layer_name": "layer2",
             "type": "dense",
-            "input_dim": "20",
-            "output_dim": "40",
+            "input_dim": 20,
+            "output_dim": 40,
             "activation": "softmax"
         }
     ]
