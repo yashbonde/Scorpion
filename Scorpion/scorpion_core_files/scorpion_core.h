@@ -29,7 +29,7 @@ class Matrix{
     // constructor
     Matrix(int, int);
     // destructor
-    ~Matrix();
+    //~Matrix();
 
     // methods
     std::vector<float> get_row(int);
@@ -62,12 +62,13 @@ Matrix :: Matrix(int num_of_rows, int num_of_cols) {
 }
 
 //========= Destructor =========//
-Matrix :: ~Matrix() {
+
+//Matrix :: ~Matrix() {
     /*
     Destroy the Matrix class
     */
-    delete base;
-}
+//    delete base;
+//}
 
 //========= Methods =========//
 std::vector<float> Matrix :: get_row(int row_num) {

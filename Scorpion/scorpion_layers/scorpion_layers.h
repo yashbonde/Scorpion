@@ -33,7 +33,7 @@ class ScorpionLayer{
     
 };
 
-Matrix dense(Matrix x, Matrix W, Matrix b, int activation){
+Matrix ScorpionLayer::dense(Matrix x, Matrix W, Matrix b, int activation){
     /*
     A simple implementation of a fully connected dense layer.
     Args:
@@ -61,7 +61,7 @@ Matrix dense(Matrix x, Matrix W, Matrix b, int activation){
     }
 }
 
-std::vector<Matrix> lstm_cell(Matrix input_, Matrix hidden_prev, Matrix prev_cell_state,
+std::vector<Matrix> ScorpionLayer::lstm_cell(Matrix input_, Matrix hidden_prev, Matrix prev_cell_state,
         Matrix W_f, Matrix U_f, Matrix b_f,
         Matrix W_i, Matrix U_i, Matrix b_i,
         Matrix W_c, Matrix U_c, Matrix b_c,
@@ -120,7 +120,7 @@ std::vector<Matrix> lstm_cell(Matrix input_, Matrix hidden_prev, Matrix prev_cel
     return final_vector;
 }
 
-std::vector<Matrix> peephole_lstm_cell(Matrix input_, Matrix prev_cell_state,
+std::vector<Matrix> ScorpionLayer::peephole_lstm_cell(Matrix input_, Matrix prev_cell_state,
         Matrix W_f, Matrix U_f, Matrix b_f,
         Matrix W_i, Matrix U_i, Matrix b_i,
         Matrix W_c, Matrix U_c, Matrix b_c,
@@ -182,7 +182,7 @@ std::vector<Matrix> peephole_lstm_cell(Matrix input_, Matrix prev_cell_state,
 
 /*
 finish later
-std::vector<Matrix> gru_cell(Matrix input_, Matrix prev_cell_state,
+std::vector<Matrix> ScorpionLayer::gru_cell(Matrix input_, Matrix prev_cell_state,
         Matrix W_z, Matrix U_z, Matrix b_z,
         Matrix W_r, Matrix U_r, Matrix b_r,
         Matrix W_h, Matrix U_h, Matrix b_h){
