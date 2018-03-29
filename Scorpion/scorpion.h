@@ -16,6 +16,8 @@ using string = std::string;
 This is just a road map file for scorpion.h, the function that will actually be called
 during the execution of the model.
 */
+#ifndef SCORPION_H
+#define SCORPION_H
 
 class ScorpionModel{
  public:
@@ -77,3 +79,4 @@ class ScorpionModel{
     // array_with_layer_names is the array that has the names of all the elements of array
     // string_array array_with_layer_names[];  // still don't know how to store the stuff
 };
+#endif
