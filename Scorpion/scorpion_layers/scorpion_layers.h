@@ -9,9 +9,11 @@ an external wrapper class will be used.
 See license for legal queries.
 2018, Yash Bonde
 */
-#include "core_layers.h"
 #ifndef SCORPION_SCORPION_LAYERS_H_
 #define SCORPION_SCORPION_LAYERS_H_
+#include "./core_layers.h"
+#include "../scorpion_core_files/scorpion_core.h"
+#include "../scorpion_core_files/scorpion_core_ops.h"
 
 class ScorpionLayer{
  public:
@@ -110,9 +112,9 @@ std::vector<Matrix> lstm_cell(Matrix input_, Matrix hidden_prev, Matrix prev_cel
     Matrix cell_output = c.element_wise_matmul(output_gate, cl.tanh(curr_cell_state));
 
     // make final vector
-    std::vector<Matrix> final_vector(2);
-    final_vector[0] = curr_cell_state;
-    final_vector[1] = cell_output;
+    std::vector<Matrix> final_vector;
+    final_vector.push_back(curr_cell_state);
+    final_vector.push_back(cell_output);
 
     // return the vector
     return final_vector;
@@ -168,9 +170,9 @@ std::vector<Matrix> peephole_lstm_cell(Matrix input_, Matrix prev_cell_state,
     Matrix cell_output = c.element_wise_matmul(output_gate, cl.tanh(curr_cell_state));
 
     // make final vector
-    std::vector<Matrix> final_vector(2);
-    final_vector[0] = curr_cell_state;
-    final_vector[1] = cell_output;
+    std::vector<Matrix> final_vector;
+    final_vector.push_back(curr_cell_state);
+    final_vector.push_back(cell_output);
 
     // return the vector
     return final_vector;

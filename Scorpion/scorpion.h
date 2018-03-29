@@ -1,3 +1,6 @@
+#ifndef SCORPION_H_
+#define SCORPION_H_
+
 #include <fstream>
 #include <iostream>
 #include <string>
@@ -18,8 +21,6 @@ using string = std::string;
 This is just a road map file for scorpion.h, the function that will actually be called
 during the execution of the model.
 */
-#ifndef SCORPION_H
-#define SCORPION_H
 
 class ScorpionModel{
  public:
