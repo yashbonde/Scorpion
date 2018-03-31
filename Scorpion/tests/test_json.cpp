@@ -1,4 +1,4 @@
-#include "json.hpp"
+#include "../external/json.hpp"
 #include <fstream>
 #include <iostream>
 
@@ -13,6 +13,7 @@ int main() {
     std::cout << '\n';
     std::cout << j["layers"] << '\n';
     std::cout << '\n';
+    std::cout << j["layers"].size() << '\n';
     std::cout << j["layers"][0] << '\n';
     std::cout << '\n';
     std::cout << j["layers"][0]["activation"] << '\n';

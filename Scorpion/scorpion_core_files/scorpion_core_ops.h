@@ -184,7 +184,7 @@ Matrix CoreOps::concatenate(Matrix A, Matrix B, int axis = 0){
             for (int i=0;i<rows;i++) {
                 for (int j = 0; j<cola; j++)
                     temp.base[i][j] = A.base[i][j];
-                for (int j=rowa; j<cola+colb;i++)
+                for (int j=cola; j<cola+colb;i++)
                     temp.base[i][j] = B.base[i][j-cola];
             }
             return temp;
@@ -239,7 +239,7 @@ std::vector<float> CoreOps::argmax(Matrix A, int axis = 0) {
             for (int i=0;i<A.col_size; i++) {
                 if(A.base[i][j] > max) {
                     max = A.base[i][j];
-                    pos = (row_size * i) + j;
+                    pos = (A.row_size * i) + j;
                 }
             }
         }
@@ -251,7 +251,7 @@ std::vector<float> CoreOps::argmax(Matrix A, int axis = 0) {
             int pos = -1;
             for(int j=0; j< A.no_of_cols; j++) {
                 if(A.base[i][j] > max) {
-                    max = a.base[i][j];
+                    max = A.base[i][j];
                     pos = j;
                 }
             }
